@@ -1,23 +1,9 @@
 ##General Description
+This file contains a general description of the code, a description of the part of the raw data that interests us, a short explanation of the transformations the raw data underwent, and a list of the variables present in the new dataset (AveragedFeaturesPerSubjectAndActivity.txt)
 
-Starting with data collected from the accelerometers from the Samsung Galaxy S smartphone (available here: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip), I averaged the value of the features per subject and activity
+Starting with data collected from the accelerometers from the Samsung Galaxy S smartphone (available here: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip), I averaged the value of the features per subject and activity and created a new data set depicting one value per subject and activity.
 
-The raw data consists of 3 separate folders, one with information and labels, and another two with the data, divided between the test subjects and the training subjects. 
-
-##Transformations performed on raw data
-1. The X_test and X_train data were merged into one data frame
-
-2. The new data frame was given variable names taken from features.txt
-
-3. The columns with calculated mean() and std() were subset. This was done using partial matching of the variable name.
-
-4. The subject_test and subject_train were merged and transformed into a factor: subject_ID
-
-5. The y_test and y_train sets were merged and transformed into a factor: activity
-
-6. subject_ID and activity are added to the subset (step 3)
-
-7. Using 'melt' and 'dcast' from the reshape2 package, the subset is reshaped: First by establishing ID variables ("activity" and "subject_ID") and measure variables (rest), secondly by creating a dataframe with the average of every measure variable per id variable. 
+The raw data consists of 3 separate folders, one with information and labels, and another two with the data, divided between the test subjects and the training subjects. The code assumes that these three folders are in R's working directory.  
 
 ##Description of the raw data
 The description of the variables is taken from raw data feature_info file: 
@@ -37,29 +23,63 @@ Then they were filtered using a median filter and a 3rd order low pass Butterwor
 - These signals were used to estimate variables of the feature vector for each pattern:  
 '-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
 
+
+##Transformations performed on raw data
+1. The X_test and X_train data were merged into one data frame
+
+2. The new data frame was given variable names taken from features.txt
+
+3. The columns with calculated mean() and std() were subset. This was done using partial matching of the variable name.
+
+4. The subject_test and subject_train were merged and transformed into a factor: subject_ID
+
+5. The y_test and y_train sets were merged and transformed into a factor: activity
+
+6. subject_ID and activity are added to the subset (step 3)
+
+7. Using 'melt' and 'dcast' from the reshape2 package, the subset is reshaped: First by establishing ID variables ("activity" and "subject_ID") and measure variables (rest), secondly by creating a dataframe with the average of every measure variable per id variable. 
+
+
 ##Description of the variables
 The final dataset, FeaturesAveragedPerSubjectAndActivity.txt consists of 80 variables. The variables describe the average of the calculated means and standard deviations of each of the features available in the accelerometer data: 
 
  
 $ subject_ID	factor with 30 levels (1 level per subject of the experiment)
+
 $ activity	factor with 6 levels (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING)
 
 and the average value of the mean() and std() of: 
 
 tBodyAcc-XYZ      
+
 tGravityAcc-XYZ
+
 tBodyAccJerk-XYZ
+
 tBodyGyro-XYZ		
+
 tBodyGyroJerk-XYZ
+
 tBodyAccMag
+
 tGravityAccMag
+
 tBodyAccJerkMag
+
 tBodyGyroMag
+
 tBodyGyroJerkMag
+
 fBodyAcc-XYZ
+
 fBodyAccJerk-XYZ
+
 fBodyGyro-XYZ
+
 fBodyAccMag
+
 fBodyAccJerkMag
+
 fBodyGyroMag
+
 fBodyGyroJerkMag
